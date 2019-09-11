@@ -5,46 +5,62 @@
  */
 package GUI;
 
+import Model.Sphere;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.List;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author Gabriel
  */
-public class CanvasPanel extends javax.swing.JPanel {
-
-    private boolean flag;
-    private int x;
-    private int y;
-    private int SIZE = 10;
+public class CanvasPanel extends javax.swing.JPanel implements Runnable{
+    
+    private Thread thread;
+    private List<Sphere> spheres;
     
     /**
      * Creates new form CanvasPanel
      */
     public CanvasPanel() {
         initComponents();
-        flag = true;
-        x = getWidth();
-        y = getHeight();
+        thread = new Thread(this);
+    }
+
+    public void setCircles(List<Sphere> spheres) {
+        this.spheres = spheres;
     }
     
-    public void play() {
-        flag = true;
+    public void paintBackground(Graphics g) {
+        g.clearRect(0, 0, getWidth(), getHeight());
     }
+
     
-    public void stop() {
-        flag = false;
-    }
-        
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.BLACK);
-        g.fillOval(x, y, SIZE, SIZE);
-        
+        paintBackground(getGraphics());
+        //new SphereGUI().paintComponent(g);
     }
 
+    @Override
+    public void run() {
+        try {
+            while(true) {
+                paintBackground(getGraphics());
+                Thread.sleep(90);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public void start() {
+        if (!thread.isAlive()) {
+            thread.start();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,8 +70,6 @@ public class CanvasPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 153), 2));
         setMinimumSize(new java.awt.Dimension(500, 500));
         setPreferredSize(new java.awt.Dimension(500, 500));
 
@@ -63,14 +77,13 @@ public class CanvasPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
