@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import Controller.Controller;
+import Model.IShape;
 import Model.Sphere;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -16,11 +18,15 @@ import javax.swing.JFrame;
  * @author Gabriel
  */
 public class MainFrame extends javax.swing.JFrame {    
+    
+    Controller controller;
+    
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        controller = new Controller(canvas);
     }   
 
     /**
@@ -143,7 +149,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         comboBoxPattern.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        comboBoxPattern.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prototype", "Factory Method", "Builder", "Object Pool" }));
+        comboBoxPattern.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prototype", "Factory Method", "Builder", "Object Pool", "None" }));
         comboBoxPattern.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxPatternActionPerformed(evt);
@@ -265,31 +271,25 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void butonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butonCreateActionPerformed
-        /*controller.create(
+        canvas.start();
+        List<IShape> shapes = controller.create(
                 new Integer(spinnerAmount.getValue().toString()),
                 comboBoxColor.getSelectedItem().toString(),
                 comboBoxDirection.getSelectedItem().toString(),
-                comboBoxSpeed.getSelectedItem().toString(),
+                Integer.parseInt(comboBoxSpeed.getSelectedItem().toString()),
                 comboBoxPattern.getSelectedItem().toString()
                 );
         
-        */
-        canvas.start();
-        System.out.println("done");
-        Sphere s = new Sphere(canvas);
-        s.paintComponent(canvas.getGraphics());
-        s.start();
-        
-        /*
-        List<SphereGUI> spheres = new ArrayList<>();
-        spheres.add(s);
-        canvas.setCircles(spheres);
-        */
+        // Paints all shapes
+        for(IShape shape:shapes) {
+            Sphere sp = (Sphere) shape;
+            sp.paintComponent(canvas.getGraphics());
+            sp.start();
+        }
 
     }//GEN-LAST:event_butonCreateActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
-        canvas.start();
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void comboBoxColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxColorActionPerformed

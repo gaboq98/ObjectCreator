@@ -18,7 +18,6 @@ import javax.swing.ImageIcon;
 public class CanvasPanel extends javax.swing.JPanel implements Runnable{
     
     private Thread thread;
-    private List<Sphere> spheres;
     
     /**
      * Creates new form CanvasPanel
@@ -27,21 +26,15 @@ public class CanvasPanel extends javax.swing.JPanel implements Runnable{
         initComponents();
         thread = new Thread(this);
     }
-
-    public void setCircles(List<Sphere> spheres) {
-        this.spheres = spheres;
-    }
     
     public void paintBackground(Graphics g) {
         g.clearRect(0, 0, getWidth(), getHeight());
     }
-
     
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         paintBackground(getGraphics());
-        //new SphereGUI().paintComponent(g);
     }
 
     @Override
@@ -49,7 +42,7 @@ public class CanvasPanel extends javax.swing.JPanel implements Runnable{
         try {
             while(true) {
                 paintBackground(getGraphics());
-                Thread.sleep(90);
+                Thread.sleep(70);
             }
         } catch (Exception e) {
         }

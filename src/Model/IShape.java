@@ -11,6 +11,6 @@ package Model;
  */
 public interface IShape {
     
-    
+    public void move() throws InterruptedException;
     
 }

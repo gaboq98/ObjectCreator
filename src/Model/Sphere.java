@@ -13,43 +13,43 @@ import java.awt.Graphics;
  *
  * @author Gabriel
  */
-public class Sphere implements Runnable{
+public class Sphere implements IShape, Runnable{
     
-    private int x;
-    private int y;
     private int SIZE = 10;
     private int WIDTH = 500;
     private int HEIGHT = 500;
+    private int SPEED = 60;
+    private int MOVEMENT = 5;
+    private String direction;
+    private float ratio;
     private Color color;
+    private int x;
+    private int y;
+    
     private Thread thread;
     private CanvasPanel canvas;
-
+    
     public Sphere() {
-        thread = new Thread(this);
-        x = WIDTH/2-SIZE;
-        y = HEIGHT-SIZE;
-        color = Color.RED;
     }
     
     public Sphere(CanvasPanel canvas) {
         thread = new Thread(this);
-        x = WIDTH/2-SIZE;
-        y = HEIGHT-SIZE;
+        x =  (int) Math.floor(Math.random()*WIDTH);
+        System.out.println(Math.floor(Math.random()*WIDTH));
+        y = (int) Math.floor(Math.random()*WIDTH);
         color = Color.BLUE;
         this.canvas = canvas;
-    }
-
-    public Sphere(int x, int y) {
-        thread = new Thread(this);
-        this.x = x;
-        this.y = y;
+        ratio = (float) 0.3;
     }
     
-    public Sphere(int _x, int _y, Color _color) {
+    public Sphere(CanvasPanel _canvas, Color _color,  String _direction, int _ratio) {
         thread = new Thread(this);
-        x = _x;
-        y = _y;
+        x = (int) Math.floor(Math.random()*WIDTH);
+        y = (int) Math.floor(Math.random()*HEIGHT);
         color = _color;
+        canvas = _canvas;
+        ratio = (float) _ratio/10;
+        direction = _direction;
     }
     
     public void setX(int x) {
@@ -73,18 +73,37 @@ public class Sphere implements Runnable{
         g.fillOval(x, y, SIZE, SIZE);       
     }
     
+    @Override
     public void move() throws InterruptedException {
-        while(x < (WIDTH-SIZE) && (y > 0) ) {
-            paintComponent(canvas.getGraphics());
-            Thread.sleep(50);
-            x += 10;
-            y -= 10;
+        if(true) {
+            move45();
         }
-        while( (x > 0) && (y < (HEIGHT-SIZE)) ) {
+    }
+    
+    public void move45() throws InterruptedException {
+        while(x < (WIDTH-SIZE) ) {
             paintComponent(canvas.getGraphics());
-            Thread.sleep(50);
-            x -= 10;
-            y += 10;
+            Thread.sleep((long) (SPEED*ratio));
+            x += MOVEMENT;
+            y -= MOVEMENT;
+        }
+        while( (y > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
+            y -= MOVEMENT;
+        }
+        while( (x > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
+            y += MOVEMENT;
+        }
+        while( (y < (HEIGHT-SIZE)) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x += MOVEMENT;
+            y += MOVEMENT;
         }
     }
     
