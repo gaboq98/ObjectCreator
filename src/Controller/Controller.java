@@ -19,14 +19,9 @@ import java.util.List;
  */
 public class Controller {
     
-    private int size;
-    Color color;
-    private int direction;
-    private int speed;
-    private int pattern;
     private CanvasPanel canvas;
-    private int time;
     HashMap<String, Color> colors;
+    long duration;
 
     public Controller() {
         //
@@ -42,23 +37,40 @@ public class Controller {
         colors.put("Azul", Color.BLUE);
     }
 
+    public long getDuration() {
+        return duration;
+    }
+
     public List<IShape> create(int size, String color, String direction, int speed, String pattern) {
         List<IShape> shapes = new ArrayList<>();
+        long startTime;
+        long endTime;
         switch(pattern) {
             case "Prototype":
+                startTime = System.nanoTime();
+                endTime = System.nanoTime();
                 break;
             case "Factory Method":
+                startTime = System.nanoTime();
+                endTime = System.nanoTime();
                 break;
             case "Builder":
+                startTime = System.nanoTime();
+                endTime = System.nanoTime();
                 break;
             case "Object Pool":
+                startTime = System.nanoTime();
+                endTime = System.nanoTime();
                 break;
             default:
+                startTime = System.nanoTime();
                 for(int i=0; i < size; i++) {
                     shapes.add( new Sphere(canvas, colors.get(color), direction, speed) );
                 }
+                endTime = System.nanoTime();
                 break;
         }
+        duration = (endTime - startTime) / 1000000;
         return shapes;
     }
     

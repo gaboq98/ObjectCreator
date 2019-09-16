@@ -8,6 +8,7 @@ package Model;
 import GUI.CanvasPanel;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.HashMap;
 
 /**
  *
@@ -32,20 +33,10 @@ public class Sphere implements IShape, Runnable{
     public Sphere() {
     }
     
-    public Sphere(CanvasPanel canvas) {
-        thread = new Thread(this);
-        x =  (int) Math.floor(Math.random()*WIDTH);
-        System.out.println(Math.floor(Math.random()*WIDTH));
-        y = (int) Math.floor(Math.random()*WIDTH);
-        color = Color.BLUE;
-        this.canvas = canvas;
-        ratio = (float) 0.3;
-    }
-    
     public Sphere(CanvasPanel _canvas, Color _color,  String _direction, int _ratio) {
         thread = new Thread(this);
-        x = (int) Math.floor(Math.random()*WIDTH);
-        y = (int) Math.floor(Math.random()*HEIGHT);
+        x = (int) Math.floor(Math.random()*WIDTH) - SIZE;
+        y = (int) Math.floor(Math.random()*HEIGHT) - SIZE;
         color = _color;
         canvas = _canvas;
         ratio = (float) _ratio/10;
@@ -75,8 +66,44 @@ public class Sphere implements IShape, Runnable{
     
     @Override
     public void move() throws InterruptedException {
-        if(true) {
-            move45();
+        switch(direction) {
+            case "0°":
+                move0();
+                break;
+            case "45°":
+                move45();
+                break;
+            case "90°":
+                move90();
+                break;
+            case "135°":
+                move135();
+                break;
+            case "180°":
+                move180();
+                break;
+            case "225°":
+                move225();
+                break;
+            case "270°":
+                move270();
+                break;
+            case "315°":
+                move315();
+                break;
+        }
+    }
+    
+    public void move0() throws InterruptedException {
+        while(x < (WIDTH-SIZE) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x += MOVEMENT;
+        }
+        while( (x > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
         }
     }
     
@@ -104,6 +131,126 @@ public class Sphere implements IShape, Runnable{
             Thread.sleep((long) (SPEED*ratio));
             x += MOVEMENT;
             y += MOVEMENT;
+        }
+    }
+    
+    public void move90() throws InterruptedException {
+        while( (y > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            y -= MOVEMENT;
+        }
+        while( (y < (HEIGHT-SIZE)) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            y += MOVEMENT;
+        }
+    }
+    
+    public void move135() throws InterruptedException {
+        while( (x > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
+            y -= MOVEMENT;
+        }
+        while( (y > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x += MOVEMENT;
+            y -= MOVEMENT;
+        }
+        while(x < (WIDTH-SIZE) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x += MOVEMENT;
+            y += MOVEMENT;
+        }
+        while( (y < (HEIGHT-SIZE)) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
+            y += MOVEMENT;
+        }
+    }
+    
+    public void move180() throws InterruptedException {
+        while(x < (WIDTH-SIZE) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
+        }
+        while( (x > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x += MOVEMENT;
+        }
+    }
+    
+    public void move225() throws InterruptedException {
+        while( (x > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
+            y += MOVEMENT;
+        }
+        while( (y < (HEIGHT-SIZE)) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x += MOVEMENT;
+            y += MOVEMENT;
+        }
+        while(x < (WIDTH-SIZE) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x += MOVEMENT;
+            y -= MOVEMENT;
+        }
+        while( (y > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
+            y -= MOVEMENT;
+        }
+    }
+    
+    public void move270() throws InterruptedException {
+        while( (y < (HEIGHT-SIZE)) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            y += MOVEMENT;
+        }
+        while( (y > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            y -= MOVEMENT;
+        }
+    }
+    
+    public void move315() throws InterruptedException {
+        while(x < (WIDTH-SIZE) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x += MOVEMENT;
+            y += MOVEMENT;
+        }
+        while( (y < (HEIGHT-SIZE)) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
+            y += MOVEMENT;
+        }
+        while( (x > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
+            y -= MOVEMENT;
+        }
+        while( (y > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x += MOVEMENT;
+            y -= MOVEMENT;
         }
     }
     
