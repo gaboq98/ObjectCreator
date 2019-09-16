@@ -13,7 +13,7 @@ import java.awt.Color;
  *
  * @author Gabriel
  */
-public interface ISphereFactory {
+public interface ISpherePoolFactory {
     
     public Sphere createNew(CanvasPanel canvas, Color color,  String direction, int speed);
     

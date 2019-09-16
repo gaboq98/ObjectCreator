@@ -43,7 +43,7 @@ public class Controller {
         colors.put("Azul", Color.BLUE);
     }
     
-    //final SpherePool pool = new SpherePool(1, 100, 1000, new SphereFactory());
+    SpherePool pool = new SpherePool(100, 500);
     
     public List<IShape> create(int size, String color, String direction, int speed, String pattern) {
         List<IShape> shapes = new ArrayList<>();
@@ -109,7 +109,9 @@ public class Controller {
             case "Object Pool":
                 startTime = System.currentTimeMillis();
                 for(int i=0; i < size; i++) {
-                
+                    pool.initPool(canvas, colors.get(color), direction, speed);
+                    Sphere sphere = pool.getObject();
+                    shapes.add(sphere);
                 }
                 endTime = System.currentTimeMillis();
                 this.time = endTime - startTime;

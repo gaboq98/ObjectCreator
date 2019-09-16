@@ -5,9 +5,11 @@
  */
 package Patterns;
 
+import Model.Sphere;
+
 public interface IObjectPool<T extends IObjectPool> {
     
-    public T getObject();
-    public void releaceObject(T pooledObject);   
+    public Sphere getObject();
+    public void releaseObject(Sphere sphere);   
     
 }

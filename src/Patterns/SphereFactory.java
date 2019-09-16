@@ -17,7 +17,7 @@ import Model.SphereTypes;
 import java.awt.Canvas;
 import java.awt.Color;
 
-public class SphereFactory implements ISphereFactory{  
+public class SphereFactory implements ISpherePoolFactory{  
     
     /**
      *
@@ -47,7 +47,7 @@ public class SphereFactory implements ISphereFactory{
 
     @Override
     public Sphere createNew(CanvasPanel canvas, Color color, String direction, int speed) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new Sphere(canvas, color, direction, speed);
     }
 
 }

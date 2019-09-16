@@ -6,6 +6,7 @@
 package Model;
 
 import GUI.CanvasPanel;
+import Patterns.IObjectPool;
 import java.awt.Color;
 import java.awt.Graphics;
 import Patterns.IPrototype;

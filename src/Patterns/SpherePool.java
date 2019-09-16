@@ -18,26 +18,37 @@ public class SpherePool implements IObjectPool{
 
     private final int MAX;
     private final int MIN;
-    private Stack stack;
+    private Stack<Sphere> stack = new Stack<>();
     
-    public SpherePool(int min, int max , CanvasPanel canvas, Color color,  String direction, int speed) {
+    public SpherePool(int min, int max) {
         MIN = min;
         MAX = max;
-        stack = new Stack();
     }
     
     public void initPool(CanvasPanel canvas, Color color,  String direction, int speed) {
-        
+        for (int c = stack.size(); c < MIN; c++) {
+            Sphere sphere = new Sphere(canvas, color, direction, speed);
+            stack.push(sphere);
+        }
+    }
+    
+    public Sphere newInstancePool(CanvasPanel canvas, Color color,  String direction, int speed){
+        int i = stack.size();
+        if (i < MAX){
+            Sphere sphere = new Sphere(canvas, color, direction, speed);
+            stack.push(sphere);
+        }
+        return stack.pop();
     }
     
     @Override
-    public IObjectPool getObject() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Sphere getObject() {
+        return (Sphere) stack.pop();
     }
 
     @Override
-    public void releaceObject(IObjectPool pooledObject) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void releaseObject(Sphere sphere) {
+        stack.push(sphere);
     }
 
     
