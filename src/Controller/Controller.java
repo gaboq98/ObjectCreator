@@ -43,8 +43,7 @@ public class Controller {
         colors.put("Azul", Color.BLUE);
     }
     
-    final SpherePool pool =
-            new SpherePool(1, 100, 1000, new SphereFactory());
+    //final SpherePool pool = new SpherePool(1, 100, 1000, new SphereFactory());
     
     public List<IShape> create(int size, String color, String direction, int speed, String pattern) {
         List<IShape> shapes = new ArrayList<>();

@@ -6,7 +6,6 @@
 package Model;
 
 import GUI.CanvasPanel;
-import Patterns.IPooledObject;
 import java.awt.Color;
 import java.awt.Graphics;
 import Patterns.IPrototype;
@@ -15,7 +14,7 @@ import Patterns.IPrototype;
  *
  * @author Gabriel
  */
-public class Sphere implements IPooledObject, IPrototype, IShape, Runnable{
+public class Sphere implements IPrototype, IShape, Runnable{
     
     private int SIZE = 10;
     private int WIDTH = 500;
@@ -317,17 +316,6 @@ public class Sphere implements IPooledObject, IPrototype, IShape, Runnable{
     @Override
     public Sphere clone() {
         return new Sphere(this.canvas, this.color, this.direction, (int)(this.ratio*10));
-    }
-
-    @Override
-    public boolean validate() {
-       return uses < 2;
-    }
-
-    @Override
-    public void invalidate() {
-        invalidate++;
-        System.out.println("Invalidate Counter ==> " + invalidate);
     }
     
      public static class SphereBuilder implements IBuilder<Sphere>{

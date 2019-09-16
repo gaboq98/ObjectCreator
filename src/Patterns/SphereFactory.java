@@ -17,7 +17,7 @@ import Model.SphereTypes;
 import java.awt.Canvas;
 import java.awt.Color;
 
-public class SphereFactory implements IPoolableObjectFactory<Sphere>{  
+public class SphereFactory implements ISphereFactory{  
     
     /**
      *
@@ -47,13 +47,7 @@ public class SphereFactory implements IPoolableObjectFactory<Sphere>{
 
     @Override
     public Sphere createNew(CanvasPanel canvas, Color color, String direction, int speed) {
-        Sphere Sphere = null;
-        if(PrototypeFactory.checkProtoype("sphere" + color + direction + speed)){
-            Sphere = (Sphere) PrototypeFactory.getPrototype("sphere" + color + direction + speed);
-        }else{
-            Sphere = new Sphere(canvas, color, direction, speed);
-            PrototypeFactory.addPrototype("sphere" + color + direction + speed, Sphere);
-        }
-        return Sphere;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

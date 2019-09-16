@@ -5,7 +5,9 @@
  */
 package Patterns;
 
-public interface IObjectPool<T extends IPooledObject> {
-    public T getObject() throws PoolException;
+public interface IObjectPool<T extends IObjectPool> {
+    
+    public T getObject();
     public void releaceObject(T pooledObject);   
+    
 }
