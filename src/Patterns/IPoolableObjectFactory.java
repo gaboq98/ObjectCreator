@@ -5,8 +5,11 @@
  */
 package Patterns;
 
+import GUI.CanvasPanel;
+import java.awt.Color;
+
 public interface IPoolableObjectFactory<T extends IPooledObject> {
-    public T createNew();
+    public T createNew(CanvasPanel canvas, Color color, String direction, int speed);
 }
 
 

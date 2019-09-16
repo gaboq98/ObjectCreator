@@ -10,12 +10,14 @@ package Patterns;
  * @author Pumkin
  */
 
+import GUI.CanvasPanel;
 import Model.IShape;
 import Model.Sphere;
 import Model.SphereTypes;
+import java.awt.Canvas;
 import java.awt.Color;
 
-public class SphereFactory {  
+public class SphereFactory implements IPoolableObjectFactory<Sphere>{  
     
     /**
      *
@@ -41,5 +43,17 @@ public class SphereFactory {
                 break;
         }
         return sphere;
+    }
+
+    @Override
+    public Sphere createNew(CanvasPanel canvas, Color color, String direction, int speed) {
+        Sphere Sphere = null;
+        if(PrototypeFactory.checkProtoype("sphere" + color + direction + speed)){
+            Sphere = (Sphere) PrototypeFactory.getPrototype("sphere" + color + direction + speed);
+        }else{
+            Sphere = new Sphere(canvas, color, direction, speed);
+            PrototypeFactory.addPrototype("sphere" + color + direction + speed, Sphere);
+        }
+        return Sphere;
     }
 }

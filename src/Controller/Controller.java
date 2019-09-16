@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import Patterns.PrototypeFactory;
 import Patterns.SphereFactory;
+import Patterns.SpherePool;
 
 /**
  *
@@ -41,6 +42,9 @@ public class Controller {
         colors.put("Amarillo", Color.YELLOW);
         colors.put("Azul", Color.BLUE);
     }
+    
+    final SpherePool pool =
+            new SpherePool(1, 100, 1000, new SphereFactory());
     
     public List<IShape> create(int size, String color, String direction, int speed, String pattern) {
         List<IShape> shapes = new ArrayList<>();
