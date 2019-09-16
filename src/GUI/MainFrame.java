@@ -50,6 +50,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         labelTime = new javax.swing.JLabel();
+        buttonReset = new javax.swing.JButton();
         canvas = new GUI.CanvasPanel();
         comboBoxSpeed = new javax.swing.JComboBox<>();
         comboBoxDirection = new javax.swing.JComboBox<>();
@@ -98,10 +99,19 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel7.setText("Objects Creator");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        jLabel8.setText("Tiempo:");
+        jLabel8.setText("Tiempo en milisegundos:");
 
         labelTime.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
-        labelTime.setText("00:00:00");
+        labelTime.setText("0");
+
+        buttonReset.setBackground(new java.awt.Color(255, 51, 51));
+        buttonReset.setFont(new java.awt.Font("Segoe UI Semilight", 1, 16)); // NOI18N
+        buttonReset.setText("Reiniciar");
+        buttonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonResetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout canvasLayout = new javax.swing.GroupLayout(canvas);
         canvas.setLayout(canvasLayout);
@@ -173,12 +183,21 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                                .addComponent(jLabel7))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(buttonReset)
+                                    .addComponent(butonCreate))))
+                        .addGap(30, 30, 30))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelTime, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
@@ -192,18 +211,9 @@ public class MainFrame extends javax.swing.JFrame {
                                     .addComponent(comboBoxColor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(comboBoxDirection, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(comboBoxSpeed, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(spinnerAmount))))
-                        .addContainerGap(198, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
-                                .addComponent(jLabel7))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 322, Short.MAX_VALUE)
-                                .addComponent(butonCreate)))
-                        .addGap(30, 30, 30))))
+                                    .addComponent(spinnerAmount)))
+                            .addComponent(labelTime, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,10 +247,11 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(labelTime))
-                        .addGap(0, 145, Short.MAX_VALUE))
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelTime)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                        .addComponent(buttonReset))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel12)
@@ -267,16 +278,17 @@ public class MainFrame extends javax.swing.JFrame {
                 comboBoxPattern.getSelectedItem().toString()
                 );
         
-        System.out.println(controller.getDuration());
-        
         // Paints all shapes
         for(IShape shape:shapes) {
             Sphere sp = (Sphere) shape;
             sp.paintComponent(canvas.getGraphics());
             sp.start();
         }
-
+        labelTime.setText(Long.toString(controller.getTime()));
     }//GEN-LAST:event_butonCreateActionPerformed
+
+    private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
+    }//GEN-LAST:event_buttonResetActionPerformed
 
     private void comboBoxColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxColorActionPerformed
         
@@ -327,10 +339,14 @@ public class MainFrame extends javax.swing.JFrame {
                 new MainFrame().setVisible(true);
             }
         });
+        
+        /* Create initial prototype */
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butonCreate;
+    private javax.swing.JButton buttonReset;
     private GUI.CanvasPanel canvas;
     private javax.swing.JComboBox<String> comboBoxColor;
     private javax.swing.JComboBox<String> comboBoxDirection;

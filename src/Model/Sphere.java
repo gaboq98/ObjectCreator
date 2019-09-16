@@ -8,13 +8,13 @@ package Model;
 import GUI.CanvasPanel;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.HashMap;
+import Patterns.IPrototype;
 
 /**
  *
  * @author Gabriel
  */
-public class Sphere implements IShape, Runnable{
+public class Sphere implements IPrototype, IShape, Runnable{
     
     private int SIZE = 10;
     private int WIDTH = 500;
@@ -31,12 +31,25 @@ public class Sphere implements IShape, Runnable{
     private CanvasPanel canvas;
     
     public Sphere() {
+        thread = new Thread(this);
+        x = (int) Math.floor(Math.random()*WIDTH);
+        y = (int) Math.floor(Math.random()*HEIGHT);
+    }
+    
+    public Sphere(CanvasPanel canvas) {
+        thread = new Thread(this);
+        x =  (int) Math.floor(Math.random()*WIDTH);
+        System.out.println(Math.floor(Math.random()*WIDTH));
+        y = (int) Math.floor(Math.random()*WIDTH);
+        color = Color.BLUE;
+        this.canvas = canvas;
+        ratio = (float) 0.3;
     }
     
     public Sphere(CanvasPanel _canvas, Color _color,  String _direction, int _ratio) {
         thread = new Thread(this);
-        x = (int) Math.floor(Math.random()*WIDTH) - SIZE;
-        y = (int) Math.floor(Math.random()*HEIGHT) - SIZE;
+        x = (int) Math.floor(Math.random()*WIDTH);
+        y = (int) Math.floor(Math.random()*HEIGHT);
         color = _color;
         canvas = _canvas;
         ratio = (float) _ratio/10;
@@ -51,6 +64,22 @@ public class Sphere implements IShape, Runnable{
         this.y = y;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public void setRatio(float ratio) {
+        this.ratio = ratio/10;;
+    }
+
+    public void setCanvas(CanvasPanel canvas) {
+        this.canvas = canvas;
+    }
+    
     public int getX() {
         return x;
     }
@@ -64,7 +93,7 @@ public class Sphere implements IShape, Runnable{
         g.fillOval(x, y, SIZE, SIZE);       
     }
     
-    @Override
+     @Override
     public void move() throws InterruptedException {
         switch(direction) {
             case "0°":
@@ -178,12 +207,22 @@ public class Sphere implements IShape, Runnable{
         while(x < (WIDTH-SIZE) ) {
             paintComponent(canvas.getGraphics());
             Thread.sleep((long) (SPEED*ratio));
-            x -= MOVEMENT;
+            x += MOVEMENT;
         }
         while( (x > 0) ) {
             paintComponent(canvas.getGraphics());
             Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
+        }
+        while(x < (WIDTH-SIZE) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
             x += MOVEMENT;
+        }
+        while( (x > 0) ) {
+            paintComponent(canvas.getGraphics());
+            Thread.sleep((long) (SPEED*ratio));
+            x -= MOVEMENT;
         }
     }
     
@@ -269,4 +308,47 @@ public class Sphere implements IShape, Runnable{
             thread.start();
         }
     }
+
+               
+    @Override
+    public Sphere clone() {
+        return new Sphere(this.canvas, this.color, this.direction, (int)(this.ratio*10));
+    }
+    
+     public static class SphereBuilder implements IBuilder<Sphere>{
+         
+         private String direction;
+         private float ratio;
+         private Color color;
+         private CanvasPanel canvas;
+         
+         public SphereBuilder(){
+         }
+         
+         public SphereBuilder setDirection(String direction) {
+             this.direction = direction;
+             return this;
+         }
+         public SphereBuilder setRatio(float ratio) {
+             this.ratio = ratio;
+             return this;
+         }
+         
+         public SphereBuilder setColor(Color color) {
+             this.color = color;
+             return this;
+         }
+
+         public SphereBuilder setCanvas(CanvasPanel canvas) {
+             this.canvas = canvas;
+             return this;
+         }
+
+         
+         @Override
+         public Sphere build() {
+             return new Sphere(canvas, color, direction, (int)ratio);
+         }
+         
+     }
 }
